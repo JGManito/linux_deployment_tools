@@ -39,7 +39,7 @@ with open(path,'r+') as fh:
               break
           else:
               fh.seek(line_counter_prev)
-              fh.write("iface %s inet dhcp\n" % iface_name.group(1))
+              fh.write("iface %s inet static\n" % iface_name.group(1))
               fh.write("address %s\n" % sys.argv[1])
               fh.write("netmask %s\n" % sys.argv[2])
               fh.write("gateway %s\n" % sys.argv[3])
