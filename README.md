@@ -3,4 +3,4 @@ A set of random scripts and/or tools for helping with deployment of linux server
 
 Contains:
 
-  * configure_static_ip.py: A python script to change the network interface configuration to static. WIP
+  * *configure_static_ip.py*: A python script to change the network interface configuration to static. WIP
