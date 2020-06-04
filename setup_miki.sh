@@ -12,8 +12,8 @@
 #WARNING: THIS SCRIPT DOES NOT HAVE COMPLETE INPUT VALIDATION NOR ERROR HANDLING! ASSUME THAT EVERYTHING MUST RUN CORRECTLY THE FIRST TIME
 
 #0: Install package sudo and add the current user to the sudo group
-if [ ! -f /home/joaomanito/next_step ]; then
-	su - --command="apt-get -y install sudo && usermod -a -G sudo joaomanito && touch /home/joaomanito/next_step"
+if [ ! -f /home/joaomanito/next_step1 ]; then
+	su - --command="apt-get -y install sudo && usermod -a -G sudo joaomanito && touch /home/joaomanito/next_step1 && reboot"
 fi
 
 
