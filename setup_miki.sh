@@ -64,23 +64,23 @@ sudo tee -a /etc/fstab > /dev/null <<EOF2
 # #
 # #Test disk for the template
 UUID=f8a81d7c-915b-4855-b609-b49f0ba7c228	/media/ssd_datastore	ext4	defaults	0	2
-
 EOF2
 
+sudo mount -a
+
 #Install all the software to be run on bare metal:
-sudo apt-get -y install fail2ban hddtemp smartmontools sshguard ufw clonezilla
+sudo apt-get -y install fail2ban hddtemp smartmontools sshguard ufw clonezilla nginx
 
 #Install and setup docker and dependencies
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 sudo apt-get update
-
 sudo apt-get -y install docker-ce
 
 #Change docker volumes location
 sudo mkdir /media/ssd_datastore/docker_volumes
-sudo cat -a /etc/docker/daemon.json > /dev/null <<EOF3
+sudo tee -a /etc/docker/daemon.json > /dev/null <<EOF3
 { 
    "graph": "/media/ssd_datastore/docker_volumes" 
 }
