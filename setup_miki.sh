@@ -28,8 +28,7 @@ wget https://github.com/jonythunder/linux_deployment_tools/raw/master/configure_
 
 #2: Change the network interface configuration to use a static IP
 sudo apt-get -y install python
-sudo pwd
-sudo "python /home/joaomanito/configure_static_ip.py 192.168.1.83 255.255.255.0 192.168.1.254"
+su - "python /home/joaomanito/configure_static_ip.py 192.168.1.83 255.255.255.0 192.168.1.254"
 
 #3: Create the mount points for all the internal and external drives
 #Add internal drive mountpoints
