@@ -27,6 +27,7 @@ wget https://github.com/jonythunder/linux_deployment_tools/raw/master/configure_
 
 
 #2: Change the network interface configuration to use a static IP
+sudo apt-get -y install python
 sudo "python configure_static_ip.py 192.168.1.83 255.255.255.0 192.168.1.254"
 
 #3: Create the mount points for all the internal and external drives
@@ -62,4 +63,4 @@ sudo mkdir /media/external_drives/WD3000
 # EOF2
 
 #Install all the software to be run on bare metal:
-sudo apt-get install fail2ban hddtemp smartmontools sshguard ufw clonezilla
+sudo apt-get -y install fail2ban hddtemp smartmontools sshguard ufw clonezilla
