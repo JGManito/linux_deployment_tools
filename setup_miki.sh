@@ -28,6 +28,7 @@ wget https://github.com/jonythunder/linux_deployment_tools/raw/master/configure_
 
 #2: Change the network interface configuration to use a static IP
 sudo apt-get -y install python
+sudo pwd
 sudo "python /home/joaomanito/configure_static_ip.py 192.168.1.83 255.255.255.0 192.168.1.254"
 
 #3: Create the mount points for all the internal and external drives
@@ -45,7 +46,7 @@ sudo mkdir /media/external_drives/WD3000
 
 
 #Add entries to fstab
-# sudo tee -a /etc/fstab > /dev/null <<EOF2
+sudo tee -a /etc/fstab > /dev/null <<EOF2
 # # SSD_Var Partition
 # UUID=aac4f7c3-929b-44f6-ba69-8d7a889196a6	/media/ssd_var	ext4	defaults	0	2
 # #
@@ -60,18 +61,32 @@ sudo mkdir /media/external_drives/WD3000
 # #
 # # 500GB HDD (LTI)
 # UUID=768286f1-af6b-4224-88c3-26e8c398fa9a	/media/hdd_500GB	ext4	defaults	0	2
-# EOF2
+# #
+# #Test disk for the template
+UUID=f8a81d7c-915b-4855-b609-b49f0ba7c228	/media/ssd_datastore	ext4	defaults	0	2
+
+EOF2
 
 #Install all the software to be run on bare metal:
 sudo apt-get -y install fail2ban hddtemp smartmontools sshguard ufw clonezilla
 
 #Install and setup docker and dependencies
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-apt-get update
+sudo apt-get update
 
-apt-get install docker-ce -y
-systemctl start docker
-docker volume create portainer_data
- docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+sudo apt-get -y install docker-ce
+
+#Change docker volumes location
+sudo mkdir /media/ssd_datastore/docker_volumes
+sudo cat -a /etc/docker/daemon.json > /dev/null <<EOF3
+{ 
+   "graph": "/media/ssd_datastore/docker_volumes" 
+}
+EOF3
+
+#start Docker and install portainer
+sudo systemctl start docker
+sudo docker volume create portainer_data
+sudo docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
