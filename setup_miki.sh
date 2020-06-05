@@ -79,6 +79,7 @@ sudo apt-get -y install docker-ce
 
 #Change docker volumes location
 sudo mkdir /media/ssd_datastore/docker_volumes
+sudo systemctl stop docker
 sudo tee -a /etc/docker/daemon.json > /dev/null <<EOF3
 { 
    "graph": "/media/ssd_datastore/docker_volumes" 
